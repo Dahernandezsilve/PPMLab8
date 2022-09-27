@@ -1,23 +1,45 @@
 package gt.uvg.pokelist.repository
 
+import android.app.Activity
+import android.content.Context
+import android.os.Build.VERSION_CODES.P
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import gt.uvg.pokelist.model.Pokemon
+import gt.uvg.pokelist.model.PokemonResponse
+import gt.uvg.pokelist.view.MainActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
+
+
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+val retrofit = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .baseUrl("https://pokeapi.co/api/v2/")
+    .build()
+object API {
+    val retrofitService: PokemonService by lazy {
+        retrofit.create(PokemonService::class.java)
+    }
+}
 class PokemonRepository {
 
-    // Obtain pokemon list from https://pokeapi.co/
-    fun getPokemonList(): List<Pokemon> {
+    fun PokemonListRepository(): List<Pokemon>{
+
         return listOf(
-            Pokemon(834, "Drednaw"),
-            Pokemon(345, "Lileep"),
-            Pokemon(244, "Entei"),
-            Pokemon(25, "Pikachu"),
-            Pokemon(734, "Yungoos"),
-            Pokemon(890, "Eternatus"),
-            Pokemon(187, "Hoppip"),
-            Pokemon(49 , "Venomoth"),
-            Pokemon(732, "Trumbeak"),
-            Pokemon(37,"Vulpix")
+            Pokemon(1,"bulbasaur"),
+            Pokemon(2,"ivysaur"),
+            Pokemon(3,"venasaur")
         )
+
     }
 
 }
