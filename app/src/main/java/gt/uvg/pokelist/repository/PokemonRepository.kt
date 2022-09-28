@@ -32,14 +32,4 @@ object API {
 }
 class PokemonRepository {
 
-    fun PokemonListRepository(): List<Pokemon>{
-
-        return listOf(
-            Pokemon(1,"bulbasaur"),
-            Pokemon(2,"ivysaur"),
-            Pokemon(3,"venasaur")
-        )
-
-    }
-
 }

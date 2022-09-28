@@ -20,9 +20,6 @@ import gt.uvg.pokelist.model.PokemonResponse
 class PokemonListAdapter(
     private var pokemonList: List<Pokemon>
 ) : RecyclerView.Adapter<PokemonListAdapter.PokemonListHolder>() {
-
-
-
     inner class PokemonListHolder(val binding: ItemPokemonViewBinding) : RecyclerView.ViewHolder(binding.root){
 
     }
@@ -49,7 +46,4 @@ class PokemonListAdapter(
         }
     }
 
-    fun setResponse(pokemonResponse: PokemonResponse){
-        this.pokemonList = pokemonResponse.results
-    }
 }

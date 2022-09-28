@@ -28,16 +28,17 @@ import retrofit2.Response
 
 class MainFragment: Fragment() {
 
-    private var pokemonList: List<Pokemon> = PokemonRepository().PokemonListRepository()
-    private var pokemonListAdapter: PokemonListAdapter = PokemonListAdapter(pokemonList)
-    fun getPokemonList(adapter: PokemonListAdapter, view: View) {
+     fun getPokemonList(recyclerView: RecyclerView, view: View) {
         API.retrofitService.getFirst100Pokemon().enqueue(object : Callback<PokemonResponse> {
             override fun onResponse(
                 call: Call<PokemonResponse>,
                 response: Response<PokemonResponse>
             ) {
-                adapter.setResponse(response.body()!!)
+                val pokemonListAdapter: PokemonListAdapter = PokemonListAdapter(response.body()!!.results)
+                recyclerView.layoutManager = LinearLayoutManager(activity)
                 view.visibility = View.GONE
+                recyclerView.adapter = pokemonListAdapter
+                recyclerView.setHasFixedSize(true)
 
             //Toast.makeText(context, "FETCHED: " + response.body()!!.results, Toast.LENGTH_LONG).show()
 
@@ -58,12 +59,8 @@ class MainFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-        getPokemonList(pokemonListAdapter, progressBar)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = pokemonListAdapter
-
-        recyclerView.setHasFixedSize(true)
+        getPokemonList(recyclerView, progressBar)
         return view
     }
 
